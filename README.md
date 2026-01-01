@@ -182,9 +182,15 @@ See [INSTRUCTIONS.md](./INSTRUCTIONS.md) for detailed setup and configuration.
 
 ## 📚 Documentation
 
-- [Architecture Guide](./docs/architecture.md)
-- [Setup Instructions](./INSTRUCTIONS.md)
-- [API Reference](./docs/api.md) *(coming soon)*
+| Document | Description |
+|----------|-------------|
+| [Setup Instructions](./docs/INSTRUCTIONS.md) | Complete setup and running guide |
+| [API Reference](./docs/api.md) | REST API endpoints and examples |
+| [Architecture Guide](./docs/architecture.md) | System design and Clean Architecture |
+| [AI Agents Guide](./docs/agents.md) | Autonomous agent system documentation |
+| [Multi-Tenancy Guide](./docs/multi-tenancy.md) | Tenant isolation mechanisms |
+| [Deployment Guide](./docs/deployment.md) | AWS production deployment |
+| [Original Requirements](./docs/prompt.md) | Full project specification |
 
 ---
 
