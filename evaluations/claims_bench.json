@@ -1,0 +1,31 @@
+[
+    {
+        "id": "EVAL-001",
+        "description": "Standard fender bender, small amount, comprehensive policy.",
+        "input": {
+            "claim": "Minor scratch on side door from parking lot incident.",
+            "amount": 450,
+            "policy_id": "POL-GOOD-01"
+        },
+        "expected": {
+            "outcome": "APPROVED",
+            "min_confidence": 0.9
+        }
+    },
+    {
+        "id": "EVAL-002",
+        "description": "Large amount, suspected fraud (ML score high).",
+        "input": {
+            "claim": "Total vehicle loss due to fire in isolated area.",
+            "amount": 45000,
+            "fraud_score": 0.82
+        },
+        "expected": {
+            "outcome": "PENDING_HUMAN",
+            "reasoning_contains": [
+                "fraud",
+                "suspicious"
+            ]
+        }
+    }
+]

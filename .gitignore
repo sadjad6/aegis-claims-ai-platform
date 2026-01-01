@@ -1,0 +1,41 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Testing
+coverage/
+
+# Production
+dist/
+build/
+
+# Misc
+.DS_Store
+*.pem
+
+# Local env files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+.env/
+.devcontainer/
+
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.backup
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
