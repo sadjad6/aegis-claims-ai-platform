@@ -362,23 +362,24 @@ A modern Python framework for building web APIs (the backend services that power
 
 ---
 
-### Terraform (Infrastructure as Code)
+### AWS CDK (Infrastructure as Code)
 
 **What it is in simple terms**:
-A tool that lets you define cloud infrastructure in code files, then automatically creates those resources.
+A framework that lets you define cloud infrastructure using Python code, then automatically creates those resources.
 
-**Analogy**: Instead of clicking through AWS console to set up servers, databases, etc., you write a "recipe" that can be executed to create everything automatically.
+**Analogy**: Instead of clicking through AWS console to set up servers, databases, etc., you write Python code that can be executed to create everything automatically.
 
 **Why we chose it**:
+- Type-safe infrastructure with Python
 - Reproducible infrastructure (same setup every time)
 - Version controlled (track changes like code)
-- Multi-environment (dev, staging, prod from same templates)
-- Prevents "snowflake" servers with unknown configurations
+- Multi-environment (dev, staging, prod from same constructs)
+- Reusable constructs for common patterns
 
 **How we use it**:
 - Define all AWS resources (VPC, databases, Cognito, etc.)
 - Separate configurations for dev/staging/prod
-- Easy teardown and recreation
+- Easy teardown and recreation with `cdk destroy`
 
 ---
 
@@ -596,7 +597,7 @@ Before asking AI a question, we first find relevant information to include in th
 aegis-claims-ai-platform/
 ├── backend/           ← Python API (FastAPI)
 ├── frontend/          ← React dashboard
-├── terraform/         ← Infrastructure code
+├── cdk/               ← Infrastructure code (AWS CDK Python)
 ├── prompts/           ← AI prompt templates
 ├── evaluations/       ← Test datasets for AI
 └── docs/              ← Documentation
@@ -651,22 +652,23 @@ frontend/src/
 └── styles/            ← CSS
 ```
 
-### Terraform Structure
+### CDK Structure
 
 ```
-terraform/
-├── modules/           ← Reusable infrastructure blocks
-│   ├── vpc/           (Networking)
-│   ├── rds/           (Database)
-│   ├── cognito/       (Auth)
-│   ├── s3/            (Storage)
-│   ├── dynamodb/      (NoSQL)
-│   └── ai_ml/         (Bedrock, SageMaker)
+cdk/
+├── constructs/        ← Reusable infrastructure components
+│   ├── vpc.py         (Networking)
+│   ├── rds.py         (Database)
+│   ├── cognito.py     (Auth)
+│   ├── s3.py          (Storage)
+│   ├── dynamodb.py    (NoSQL)
+│   └── ai_ml.py       (Bedrock, SageMaker)
 │
-└── environments/      ← Environment-specific configs
-    ├── dev/
-    ├── staging/
-    └── prod/
+├── stacks/            ← Infrastructure stacks
+│   └── aegis_stack.py
+│
+└── config/            ← Environment-specific configs
+    └── environments.py (dev, staging, prod)
 ```
 
 ---
@@ -744,7 +746,7 @@ terraform/
 - AWS SageMaker (ML)
 - PostgreSQL + DynamoDB + OpenSearch + Redshift
 - FastAPI + React + TypeScript
-- Terraform
+- AWS CDK (Python)
 - Clean Architecture / SOLID principles
 
 ---

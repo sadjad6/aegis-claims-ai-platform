@@ -3,7 +3,7 @@
 [![Python](https://img.shields.io/badge/Python-3.11+-blue.svg)](https://python.org)
 [![React](https://img.shields.io/badge/React-18.2-61DAFB.svg)](https://reactjs.org)
 [![AWS](https://img.shields.io/badge/AWS-Native-FF9900.svg)](https://aws.amazon.com)
-[![Terraform](https://img.shields.io/badge/IaC-Terraform-623CE4.svg)](https://terraform.io)
+[![AWS CDK](https://img.shields.io/badge/IaC-AWS_CDK-FF9900.svg)](https://aws.amazon.com/cdk/)
 
 AegisClaims AI is a **production-grade, multi-tenant B2B SaaS platform** that provides AI-powered, autonomous insurance claims triage and decisioning for motor and property insurance.
 
@@ -120,7 +120,7 @@ AegisClaims AI automates the insurance claims lifecycle using a multi-agent AI s
 ### Infrastructure
 | Tool | Purpose |
 |------|---------|
-| Terraform | Infrastructure as Code |
+| AWS CDK (Python) | Infrastructure as Code |
 | Docker | Containerization |
 | CloudWatch | Logging & monitoring |
 
@@ -145,7 +145,7 @@ aegis-claims-ai-platform/
 │   │   └── auth/         # Protected routes
 ├── prompts/              # Versioned LLM prompt templates
 ├── evaluations/          # Model evaluation datasets
-├── terraform/            # IaC modules & environments
+├── cdk/                  # AWS CDK infrastructure (Python)
 ├── docs/                 # Architecture documentation
 └── README.md
 ```

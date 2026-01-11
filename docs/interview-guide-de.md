@@ -362,23 +362,24 @@ Ein modernes Python-Framework zum Erstellen von Web-APIs (die Backend-Dienste, d
 
 ---
 
-### Terraform (Infrastructure as Code)
+### AWS CDK (Infrastructure as Code)
 
 **Was es in einfachen Worten ist**:
-Ein Tool, mit dem Sie Cloud-Infrastruktur in Code-Dateien definieren können, die dann automatisch diese Ressourcen erstellen.
+Ein Framework, mit dem Sie Cloud-Infrastruktur mit Python-Code definieren können, die dann automatisch diese Ressourcen erstellt.
 
-**Analogie**: Anstatt durch die AWS-Konsole zu klicken, um Server, Datenbanken usw. einzurichten, schreiben Sie ein "Rezept", das ausgeführt werden kann, um alles automatisch zu erstellen.
+**Analogie**: Anstatt durch die AWS-Konsole zu klicken, um Server, Datenbanken usw. einzurichten, schreiben Sie Python-Code, der ausgeführt werden kann, um alles automatisch zu erstellen.
 
 **Warum wir es gewählt haben**:
+- Typsichere Infrastruktur mit Python
 - Reproduzierbare Infrastruktur (jedes Mal dasselbe Setup)
 - Versionskontrolliert (Änderungen wie Code verfolgen)
-- Multi-Environment (dev, staging, prod aus denselben Templates)
-- Verhindert "Snowflake"-Server mit unbekannten Konfigurationen
+- Multi-Environment (dev, staging, prod aus denselben Constructs)
+- Wiederverwendbare Constructs für gängige Muster
 
 **Wie wir es nutzen**:
 - Definition aller AWS-Ressourcen (VPC, Datenbanken, Cognito usw.)
 - Separate Konfigurationen für dev/staging/prod
-- Einfaches Löschen und Neuerstellen
+- Einfaches Löschen und Neuerstellen mit `cdk destroy`
 
 ---
 
@@ -596,7 +597,7 @@ Bevor wir der KI eine Frage stellen, finden wir zuerst relevante Informationen, 
 aegis-claims-ai-platform/
 ├── backend/           ← Python API (FastAPI)
 ├── frontend/          ← React Dashboard
-├── terraform/         ← Infrastruktur-Code
+├── cdk/               ← Infrastruktur-Code (AWS CDK Python)
 ├── prompts/           ← KI-Prompt-Templates
 ├── evaluations/       ← Testdatensätze für KI
 └── docs/              ← Dokumentation
@@ -651,22 +652,23 @@ frontend/src/
 └── styles/            ← CSS
 ```
 
-### Terraform-Struktur
+### CDK-Struktur
 
 ```
-terraform/
-├── modules/           ← Wiederverwendbare Infrastrukturblöcke
-│   ├── vpc/           (Netzwerk)
-│   ├── rds/           (Datenbank)
-│   ├── cognito/       (Auth)
-│   ├── s3/            (Speicher)
-│   ├── dynamodb/      (NoSQL)
-│   └── ai_ml/         (Bedrock, SageMaker)
+cdk/
+├── constructs/        ← Wiederverwendbare Infrastrukturkomponenten
+│   ├── vpc.py         (Netzwerk)
+│   ├── rds.py         (Datenbank)
+│   ├── cognito.py     (Auth)
+│   ├── s3.py          (Speicher)
+│   ├── dynamodb.py    (NoSQL)
+│   └── ai_ml.py       (Bedrock, SageMaker)
 │
-└── environments/      ← Umgebungsspezifische Konfigurationen
-    ├── dev/
-    ├── staging/
-    └── prod/
+├── stacks/            ← Infrastruktur-Stacks
+│   └── aegis_stack.py
+│
+└── config/            ← Umgebungsspezifische Konfigurationen
+    └── environments.py (dev, staging, prod)
 ```
 
 ---
@@ -744,7 +746,7 @@ terraform/
 - AWS SageMaker (ML)
 - PostgreSQL + DynamoDB + OpenSearch + Redshift
 - FastAPI + React + TypeScript
-- Terraform
+- AWS CDK (Python)
 - Clean Architecture / SOLID-Prinzipien
 
 ---

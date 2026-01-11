@@ -30,7 +30,7 @@ This guide provides step-by-step instructions to set up and run AegisClaims AI l
 | npm | 9+ | Package management |
 | PostgreSQL | 15+ | Primary database |
 | AWS CLI | 2.x | AWS service access |
-| Terraform | 1.5+ | Infrastructure provisioning |
+| AWS CDK | 2.x | Infrastructure provisioning |
 | Git | 2.x | Version control |
 
 ### AWS Account Requirements
@@ -212,16 +212,16 @@ aws sts get-caller-identity
 For a fully functional deployment, provision AWS resources:
 
 ```bash
-cd terraform/environments/dev
+cd cdk
 
-# Initialize Terraform
-terraform init
+# Install CDK dependencies
+pip install -r requirements.txt
 
-# Plan deployment
-terraform plan -var="db_password=YourSecurePassword123!"
+# Synthesize CloudFormation templates
+cdk synth --context env=dev
 
-# Apply (creates resources)
-terraform apply -var="db_password=YourSecurePassword123!"
+# Deploy infrastructure
+cdk deploy --context env=dev --all
 ```
 
 > ⚠️ **Note**: This will create billable AWS resources

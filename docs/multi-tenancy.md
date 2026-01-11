@@ -172,12 +172,14 @@ async def search_similar_claims(self, tenant_id: str, embedding: List[float], li
 
 Users have tenant_id as a custom attribute:
 
-```hcl
-# terraform/modules/cognito/main.tf
-schema {
-    name                = "tenant_id"
-    attribute_data_type = "String"
-    mutable             = true
+```python
+# cdk/constructs/cognito.py
+custom_attributes={
+    "tenant_id": cognito.StringAttribute(
+        min_len=1,
+        max_len=256,
+        mutable=True,
+    ),
 }
 ```
 
@@ -185,10 +187,9 @@ schema {
 
 AWS resources are tagged for attribute-based access:
 
-```hcl
-tags = {
-    tenant_id = var.tenant_id
-}
+```python
+# CDK automatically tags resources
+cdk.Tags.of(app).add("tenant_id", tenant_id)
 ```
 
 ---

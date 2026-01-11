@@ -38,43 +38,37 @@ This guide covers deploying AegisClaims AI to AWS production environments.
 ## Prerequisites
 
 - AWS Account with admin access
-- Terraform 1.5+ installed
+- AWS CDK 2.x installed (`npm install -g aws-cdk`)
+- Python 3.11+ installed
 - Docker installed
 - AWS CLI configured
 - Domain name (optional)
 
 ---
 
-## Step 1: Configure Terraform Variables
+## Step 1: Configure CDK Context
 
-Create `terraform/environments/prod/terraform.tfvars`:
-
-```hcl
-env                = "prod"
-region             = "us-east-1"
-db_username        = "aegis_admin"
-db_password        = "SecurePassword123!"  # Use secrets manager in production
-vpc_cidr           = "10.0.0.0/16"
-fraud_model_image  = "your-ecr-repo/fraud-model:latest"
-callback_urls      = ["https://app.aegisclaims.com/callback"]
-logout_urls        = ["https://app.aegisclaims.com/logout"]
-```
+The CDK configuration is managed in `cdk/config/environments.py`. For production,
+the configuration includes Multi-AZ RDS, 3-node OpenSearch, and 2-node Redshift.
 
 ---
 
 ## Step 2: Deploy Infrastructure
 
 ```bash
-cd terraform/environments/prod
+cd cdk
 
-# Initialize
-terraform init
+# Install dependencies
+pip install -r requirements.txt
 
-# Plan
-terraform plan -out=tfplan
+# Bootstrap CDK (first time only)
+cdk bootstrap aws://ACCOUNT_ID/us-east-1
 
-# Apply
-terraform apply tfplan
+# Synthesize CloudFormation templates
+cdk synth --context env=prod
+
+# Deploy all stacks
+cdk deploy --context env=prod --all
 ```
 
 ### Created Resources:
@@ -114,7 +108,7 @@ docker push 123456789.dkr.ecr.us-east-1.amazonaws.com/aegis-claims-api:latest
 ## Step 4: Deploy Backend to ECS
 
 ```bash
-# Update ECS service (after Terraform creates the cluster)
+# Update ECS service (after CDK creates the cluster)
 aws ecs update-service \
   --cluster aegis-claims-prod \
   --service aegis-api \
@@ -174,11 +168,11 @@ LOG_LEVEL=WARNING
 
 ## Multi-Environment Strategy
 
-| Environment | Purpose | Terraform Workspace |
+| Environment | Purpose | CDK Deploy Command |
 |-------------|---------|---------------------|
-| dev | Development | `terraform/environments/dev` |
-| staging | Pre-production testing | `terraform/environments/staging` |
-| prod | Production | `terraform/environments/prod` |
+| dev | Development | `cdk deploy --context env=dev --all` |
+| staging | Pre-production testing | `cdk deploy --context env=staging --all` |
+| prod | Production | `cdk deploy --context env=prod --all` |
 
 ---
 

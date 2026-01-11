@@ -203,9 +203,8 @@ Implement ALL of the following:
 
 ALL infrastructure must be provisioned via IaC.
 
-Use ONE:
-- Terraform (preferred)
-- OR AWS CDK
+Use:
+- AWS CDK (Python)
 
 Include:
 - Multi-environment setup (dev / staging / prod)
@@ -249,7 +248,7 @@ aegis-claims-ai-platform/
 │
 ├── prompts/
 ├── evaluations/
-├── terraform/
+├── cdk/
 ├── docs/
 └── README.md
 
