@@ -5,6 +5,8 @@
 [![AWS](https://img.shields.io/badge/AWS-Native-FF9900.svg)](https://aws.amazon.com)
 [![AWS CDK](https://img.shields.io/badge/IaC-AWS_CDK-FF9900.svg)](https://aws.amazon.com/cdk/)
 
+![AegisClaims AI Platform Dashboard](C:\Users\sadja\.gemini\antigravity\brain\7504f02f-01e8-4ff8-8007-2d3a1da276c3\aegis_claims_ai_platform_1773963275280.png)
+
 AegisClaims AI is a **production-grade, multi-tenant B2B SaaS platform** that provides AI-powered, autonomous insurance claims triage and decisioning for motor and property insurance.
 
 ## 🎯 Overview
