@@ -5,8 +5,6 @@
 [![AWS](https://img.shields.io/badge/AWS-Adapters-FF9900.svg)](https://aws.amazon.com)
 [![AWS CDK](https://img.shields.io/badge/IaC-AWS_CDK-FF9900.svg)](https://aws.amazon.com/cdk/)
 
-![AegisClaims AI Platform Dashboard](./aegis_claims_ai_platform.png)
-
 AegisClaims AI is an **experimental insurance-claims reference architecture** with FastAPI domain/application layers, a React interface, AWS service adapters and CDK infrastructure definitions. It explores claims triage and human review; it is not a verified operational SaaS deployment.
 
 ## 🎯 Overview
@@ -18,7 +16,6 @@ The repository contains claims-processing use cases, five specialist agent class
 - Tenant IDs are represented in the domain, repository interfaces and API headers. Complete tenant isolation is not established by this prototype.
 - Dashboard and API fallback metrics are illustrative data, not measurements from an operating claims service.
 - AWS adapters and CDK definitions require configuration, integration and validation. Their presence does not demonstrate a deployed service or GDPR compliance.
-- The dashboard image above illustrates the intended UI; its numbers are not benchmark or customer results.
 
 ### Design Goals
 - Explore claim triage with confidence thresholds and human review.
@@ -208,9 +205,8 @@ See [INSTRUCTIONS.md](./docs/INSTRUCTIONS.md) for setup and configuration design
 ## 🧪 Testing
 
 ```bash
-# Backend tests
-cd backend
-pytest tests/ -v
+# Backend tests (from repository root)
+python -m pytest backend/tests/ -v
 
 # Frontend tests
 cd frontend
