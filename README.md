@@ -208,9 +208,9 @@ See [INSTRUCTIONS.md](./docs/INSTRUCTIONS.md) for setup and configuration design
 # Backend tests (from repository root)
 python -m pytest backend/tests/ -v
 
-# Frontend tests
+# Frontend build check (no test script is configured)
 cd frontend
-npm run test
+npm run build
 ```
 
 ---
