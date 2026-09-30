@@ -1,5 +1,9 @@
 # AegisClaims AI
 
+![aegis-claims-ai-platform project artwork](./aegis_claims_ai_platform.png)
+
+*Original concept artwork. Integration and authentication remain incomplete; displayed business and latency figures are illustrative, not measured customer results.*
+
 [![Python](https://img.shields.io/badge/Python-3.11+-blue.svg)](https://python.org)
 [![React](https://img.shields.io/badge/React-18.2-61DAFB.svg)](https://reactjs.org)
 [![AWS](https://img.shields.io/badge/AWS-Adapters-FF9900.svg)](https://aws.amazon.com)
