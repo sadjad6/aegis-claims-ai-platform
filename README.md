@@ -2,28 +2,36 @@
 
 [![Python](https://img.shields.io/badge/Python-3.11+-blue.svg)](https://python.org)
 [![React](https://img.shields.io/badge/React-18.2-61DAFB.svg)](https://reactjs.org)
-[![AWS](https://img.shields.io/badge/AWS-Native-FF9900.svg)](https://aws.amazon.com)
+[![AWS](https://img.shields.io/badge/AWS-Adapters-FF9900.svg)](https://aws.amazon.com)
 [![AWS CDK](https://img.shields.io/badge/IaC-AWS_CDK-FF9900.svg)](https://aws.amazon.com/cdk/)
 
 ![AegisClaims AI Platform Dashboard](./aegis_claims_ai_platform.png)
 
-AegisClaims AI is a **production-grade, multi-tenant B2B SaaS platform** that provides AI-powered, autonomous insurance claims triage and decisioning for motor and property insurance.
+AegisClaims AI is an **experimental insurance-claims reference architecture** with FastAPI domain/application layers, a React interface, AWS service adapters and CDK infrastructure definitions. It explores claims triage and human review; it is not a verified operational SaaS deployment.
 
 ## 🎯 Overview
 
-AegisClaims AI automates the insurance claims lifecycle using a multi-agent AI system. It combines LLM-based reasoning (AWS Bedrock), ML-based fraud detection (AWS SageMaker), and RAG-powered policy retrieval (OpenSearch) to deliver explainable, auditable decisions with human-in-the-loop escalation.
+The repository contains claims-processing use cases, five specialist agent classes, Bedrock/SageMaker/OpenSearch adapters, and confidence-based human-review logic. These building blocks are only partially integrated: API dependencies are not configured by the current startup routine, the use case does not orchestrate the five agent classes, and coverage retrieval uses a placeholder embedding.
 
-### Business Value
-- **92%+ Automation Rate**: Reduce manual claim processing
-- **Sub-2s Decision Time**: Real-time AI-powered triage
-- **Full Auditability**: Every decision is traceable and explainable
-- **Multi-Tenant SaaS**: Serve multiple insurance providers from one platform
+### Implementation Status
+- Frontend authentication simulates a user and stores a tenant selection; Cognito token validation and backend role enforcement are not connected.
+- Tenant IDs are represented in the domain, repository interfaces and API headers. Complete tenant isolation is not established by this prototype.
+- Dashboard and API fallback metrics are illustrative data, not measurements from an operating claims service.
+- AWS adapters and CDK definitions require configuration, integration and validation. Their presence does not demonstrate a deployed service or GDPR compliance.
+- The dashboard image above illustrates the intended UI; its numbers are not benchmark or customer results.
+
+### Design Goals
+- Explore claim triage with confidence thresholds and human review.
+- Record decision reasoning and tenant context.
+- Evaluate a layered architecture for future service integration.
+
+The displayed 92.4% automation rate and 1.8-second latency are demo values. No customer automation, latency or business-impact results are established.
 
 ---
 
 ## ✨ Key Features
 
-### 🤖 Autonomous AI Agent System
+### 🤖 Specialist Agent Building Blocks
 | Agent | Purpose | Technology |
 |-------|---------|------------|
 | **Claim Intake Agent** | Validates and normalizes claim data | Python |
@@ -32,27 +40,25 @@ AegisClaims AI automates the insurance claims lifecycle using a multi-agent AI s
 | **Coverage Reasoning Agent** | LLM + RAG for policy analysis | AWS Bedrock + OpenSearch |
 | **Decision Agent** | Confidence-based decisioning with HITL | Python |
 
-### 🏢 Multi-Tenancy
-- Logical tenant isolation via `tenant_id`
-- Tenant-specific AI thresholds and configurations
-- Per-tenant prompt template versioning
-- Feature flags per tenant
+### 🏢 Tenant-Aware Design
+- `tenant_id` fields and tenant-scoped repository interfaces
+- Configuration and prompt-versioning design artifacts
+- API tenant context currently comes from a caller-supplied header; secure tenant assignment and isolation require further integration
 
-### 🔐 Security & Compliance
-- OAuth2/OIDC authentication (AWS Cognito)
-- Role-based access control (Admin, Adjuster, Supervisor, AI Ops)
-- Per-tenant audit trails
-- GDPR-compliant data handling
+### 🔐 Security Design and Limitations
+- Cognito infrastructure definitions and role concepts are included.
+- Frontend authentication is simulated; the backend does not currently enforce Cognito authentication or those roles.
+- Audit middleware logs request metadata; it does not establish complete decision auditability.
+- Data-protection and security controls require implementation and assessment before real insurance data is used. GDPR compliance is not verified.
 
-### 📊 AI Ops Dashboard
-- Real-time automation rate monitoring
-- Model drift detection
-- LLM prompt drift tracking
-- Latency and performance metrics
+### 📊 AI Ops Dashboard Prototype
+- Illustrative automation, drift, precision and latency displays
+- Static example claims and mock analytics fallback responses
+- Monitoring interfaces and adapters for future integration; no verified live monitoring pipeline
 
 ---
 
-## 🏗️ Architecture
+## 🏗️ Intended Architecture
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
@@ -107,7 +113,9 @@ AegisClaims AI automates the insurance claims lifecycle using a multi-agent AI s
 | Build Tool | Vite |
 | Routing | React Router 6 |
 
-### AWS Services
+### AWS Service Adapters and Infrastructure Definitions
+
+This inventory describes integration targets, not a verified deployment. Authentication and runtime dependency wiring remain incomplete.
 | Service | Purpose |
 |---------|---------|
 | Bedrock | LLM for coverage reasoning |
@@ -123,7 +131,7 @@ AegisClaims AI automates the insurance claims lifecycle using a multi-agent AI s
 | Tool | Purpose |
 |------|---------|
 | AWS CDK (Python) | Infrastructure as Code |
-| Docker | Containerization |
+| Docker | Containerization target (container files are not included in the current tree) |
 | CloudWatch | Logging & monitoring |
 
 ---
@@ -164,11 +172,10 @@ aegis-claims-ai-platform/
 
 ### Backend Setup
 ```bash
-cd backend
 python -m venv venv
 source venv/bin/activate  # Windows: venv\Scripts\activate
-pip install -r requirements.txt
-uvicorn main:app --reload
+pip install -r backend/requirements.txt
+uvicorn backend.main:app --reload
 ```
 
 ### Frontend Setup
@@ -178,7 +185,9 @@ npm install
 npm run dev
 ```
 
-See [INSTRUCTIONS.md](./INSTRUCTIONS.md) for detailed setup and configuration.
+Run the backend command from the repository root. Claims endpoints require dependency configuration that is not performed by the current startup routine.
+
+See [INSTRUCTIONS.md](./docs/INSTRUCTIONS.md) for setup and configuration design notes.
 
 ---
 
@@ -189,9 +198,9 @@ See [INSTRUCTIONS.md](./INSTRUCTIONS.md) for detailed setup and configuration.
 | [Setup Instructions](./docs/INSTRUCTIONS.md) | Complete setup and running guide |
 | [API Reference](./docs/api.md) | REST API endpoints and examples |
 | [Architecture Guide](./docs/architecture.md) | System design and Clean Architecture |
-| [AI Agents Guide](./docs/agents.md) | Autonomous agent system documentation |
+| [AI Agents Guide](./docs/agents.md) | Specialist agent design documentation |
 | [Multi-Tenancy Guide](./docs/multi-tenancy.md) | Tenant isolation mechanisms |
-| [Deployment Guide](./docs/deployment.md) | AWS production deployment |
+| [Deployment Guide](./docs/deployment.md) | Proposed AWS deployment configuration |
 | [Original Requirements](./docs/prompt.md) | Full project specification |
 
 ---
@@ -218,4 +227,4 @@ Proprietary - All Rights Reserved
 
 ## 🤝 Contributing
 
-This is an internal enterprise system. Contact the platform team for contribution guidelines.
+This public repository documents an experimental reference implementation. See the license before reuse or contribution.
